@@ -43,7 +43,9 @@ export class TreeNode {
  * @param {string} bossName
  * @returns {void}
  */
+
  export function hireEmployee(tree: TreeNode, newEmployee: Employee, bossName: string, initialization?: string) : void {
+    //Retrieves Name from Email
     let employeeName = newEmployee.name.split('@')[0];
     employeeName = employeeName.charAt(0).toUpperCase() + employeeName.slice(1)
     const bossNode = getEmployee(tree,bossName);
