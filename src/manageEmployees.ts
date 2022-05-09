@@ -64,7 +64,44 @@ export class TreeNode {
  * @param {string} name employee's name
  * @returns {void}
  */
-function fireEmployee() {}
+
+ export function fireEmployee(tree: TreeNode, firedName:string, replacementName?:string) : void {
+    const firedEmployeeNode = getEmployee(tree,firedName);
+    if(!firedEmployeeNode){
+        console.log(`Could not find any employee with the name: ${firedName}`)
+    }
+    else{
+        const bossNode = getEmployee(tree,firedEmployeeNode.node.boss)
+        let replacementNode : TreeNode;
+    
+        if(firedEmployeeNode.node.descendants.length == 0){
+            bossNode.node.descendants = bossNode.node.descendants.filter(descendant => descendant.name !== firedName)
+        }
+        else{
+            if(replacementName){ 
+                replacementNode = firedEmployeeNode.node
+                firedEmployeeNode.node.name = replacementName;
+                firedEmployeeNode.node.descendants.push(...replacementNode.descendants)
+                firedEmployeeNode.node.descendants.forEach(descendant => descendant.boss = replacementNode.name)
+                firedEmployeeNode.node.descendants = firedEmployeeNode.node.descendants.filter(descendant => descendant.name !== replacementNode.name)
+
+            }
+            if(!replacementName){
+            // Select random descendant
+
+            replacementNode = firedEmployeeNode.node.descendants[Math.floor(Math.random() * firedEmployeeNode.node.descendants.length)]
+            
+            // Override firedEmployee with a random descendant
+            firedEmployeeNode.node.name = replacementNode.name;
+            firedEmployeeNode.node.descendants.push(...replacementNode.descendants)
+            firedEmployeeNode.node.descendants.forEach(descendant => descendant.boss = replacementNode.name)
+            firedEmployeeNode.node.descendants = firedEmployeeNode.node.descendants.filter(descendant => descendant.name !== replacementNode.name)
+            }
+            
+        }
+        console.log(`[fireEmployee]: Fired ${firedName} and replaced with ${replacementNode.name}`);
+    }   
+}
 
 /**
  * Promotes an employee one level above their current ranking.
