@@ -111,7 +111,25 @@ export class TreeNode {
  * @param {string} employeeName
  * @returns {void}
  */
-function promoteEmployee() {}
+
+ export function promoteEmployee(tree: TreeNode, employeeName:string) : void {
+
+    const employeeNode = getEmployee(tree,employeeName);
+    if(employeeNode.node.boss != null){
+
+        const bossNode = getEmployee(tree,employeeNode.node.boss)
+    
+        employeeNode.node.name = bossNode.node.name
+        employeeNode.node.boss = employeeName
+        bossNode.node.name = employeeName
+    
+        bossNode.node.descendants.forEach(descendant => {
+            descendant.boss = employeeName
+        });
+
+        console.log(`[promoteEmployee]: Promoted ${employeeName} and made ${employeeNode.node.name} his/her subordinate`);        
+    }
+}
 
 /**
  * Demotes an employee one level below their current ranking.
@@ -122,4 +140,17 @@ function promoteEmployee() {}
  * @param {string} subordinateName the new boss
  * @returns {void}
  */
-function demoteEmployee() {}
+
+ export function demoteEmployee(tree: TreeNode, employeeName:string, subordinateName: string) : void {
+    const subordinateEmployeeNode = getEmployee(tree,subordinateName);
+    const subordinateBossEmployeeNode = getEmployee(tree,subordinateEmployeeNode.node.boss);
+    const demotedEmployeeNode = getEmployee(tree,employeeName);
+
+    demotedEmployeeNode.node.name = subordinateName
+    demotedEmployeeNode.node.descendants.push(...subordinateEmployeeNode.node.descendants,new TreeNode(employeeName,subordinateName))
+    demotedEmployeeNode.node.descendants.forEach(descendant => { descendant.boss = subordinateName });
+
+    subordinateBossEmployeeNode.node.descendants = subordinateBossEmployeeNode.node.descendants.filter(descendant => descendant.name !== subordinateName)
+
+    console.log(`[demotedEmployee]: Demoted employee (demoted ${employeeName} and replaced with ${subordinateName})`);
+}

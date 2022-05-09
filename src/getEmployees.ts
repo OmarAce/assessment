@@ -1,5 +1,6 @@
 import { TreeNode } from "./manageEmployees";
 
+// Finds Employee and their position in regards to company tree
 export function getEmployee(tree: TreeNode, employeeName: string) : {node : TreeNode, depth : number} {
     let depth = 0;
     // create a queue and a variable to store the values of nodes visited  
@@ -32,9 +33,18 @@ export function getEmployee(tree: TreeNode, employeeName: string) : {node : Tree
  * @param {string} employeeName
  * @returns {TreeNode}
  */
-function getBoss() {
 
+ export function getBoss(tree: TreeNode, employeeName: string) : string {
+    const boss = getEmployee(tree,employeeName)?.node?.boss
+
+    if(boss)
+        console.log(`[getBoss]: ${employeeName}'s boss is ${boss}`)
+    else
+        console.log(`Cound not find any boss of ${employeeName}`)
+    
+    return boss;
 }
+
 
 /**
  * Given an employee, will find the nodes directly below (if any).
@@ -44,8 +54,20 @@ function getBoss() {
  * @param {string} employeeName
  * @returns {TreeNode[]}
  */
-function getSubordinates() {
 
+ export function getSubordinates(tree: TreeNode, employeeName: string) : TreeNode | {} {
+    const employee = getEmployee(tree,employeeName)?.node?.descendants;
+
+    if(!employee){
+        console.log(`Could not find ${employeeName}`);
+        return {};
+    }
+    else if(employee.length != 0)
+        console.log(`[getSubordinate]: ${employeeName}'s subordinates are ${employee.map(descedant => descedant.name)}`)
+    else 
+        console.log(`${employeeName} has no subordinates`);
+
+    return employee;
 }
 
 /**

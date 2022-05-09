@@ -1,6 +1,6 @@
 import data from './employees.json';
-import {generateCompanyStructure, hireEmployee, fireEmployee} from './manageEmployees';
-
+import { getBoss, getSubordinates } from './getEmployees';
+import { generateCompanyStructure, hireEmployee, fireEmployee, promoteEmployee, demoteEmployee} from './manageEmployees';
 
 function main() {
     console.log('Normalizing JSON file...')
@@ -8,6 +8,11 @@ function main() {
     console.log()
     hireEmployee(companyTree,{name:'Jeb',jobTitle:'Specialist',boss:'Sarah',salary:'5000'},'Sarah')
     fireEmployee(companyTree,'Alicia','Sal');
+    promoteEmployee(companyTree,'Jared')
+    demoteEmployee(companyTree,'Xavier', 'Maria')
+    console.log();
+    getBoss(companyTree,'Bill')
+    getSubordinates(companyTree,'Maria')
 }
 
 main()
