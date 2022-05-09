@@ -1,5 +1,5 @@
 import data from './employees.json';
-import { getBoss, getSubordinates } from './getEmployees';
+import { getBoss, getSubordinates, findLowestEmployee } from './getEmployees';
 import { generateCompanyStructure, hireEmployee, fireEmployee, promoteEmployee, demoteEmployee} from './manageEmployees';
 
 function main() {
@@ -13,6 +13,8 @@ function main() {
     console.log();
     getBoss(companyTree,'Bill')
     getSubordinates(companyTree,'Maria')
+
+    findLowestEmployee(companyTree,'Nick')
 }
 
 main()

@@ -78,6 +78,15 @@ export function getEmployee(tree: TreeNode, employeeName: string) : {node : Tree
  * @param {string} employeeName
  * @returns {TreeNode}
  */
-function findLowestEmployee() {
 
+ export function findLowestEmployee(tree: TreeNode, employeeName: string) : {node : TreeNode, depth : number} | {} {
+    const employee = getEmployee(tree,employeeName)
+
+    if(!employee){
+        console.log(`Couldn't find ${employeeName}`);
+        return {};
+    }
+        
+    console.log(`Lowest ranking employee is ${employee.node.name} with a depth of ${employee.depth}`);
+    return {node : employee.node, depth : employee.depth};
 }
